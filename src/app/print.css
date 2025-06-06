@@ -1,0 +1,79 @@
+
+@media print {
+  html, body {
+    height: auto; /* Allow content to define height for multi-page */
+    margin: 0;
+    padding: 0;
+    background-color: white !important; /* Ensure background of html and body is white */
+    -webkit-print-color-adjust: exact; /* Chrome, Safari */
+    color-adjust: exact; /* Standard */
+    overflow: visible !important; /* Ensure all content is considered for printing */
+  }
+
+  /* Hide everything except the printable area and its direct children */
+  body > *:not(#printable-report-area) {
+    display: none !important;
+  }
+
+  #printable-report-area, #printable-report-area * {
+    visibility: visible !important; /* Ensure content inside is visible */
+  }
+  
+  #printable-report-area {
+    display: block !important;
+    width: auto; /* Let @page rule handle A4 sizing and flow */
+    height: auto; /* Allow content to flow across pages */
+    background-color: white; /* Ensure background of the report area itself is white */
+    color: black; /* Ensure text is black */
+    margin: 0; /* Ensure no margin on the printable area itself */
+    padding: 0; /* Ensure no padding on the printable area itself */
+    overflow: visible !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 20mm; /* Standard A4 margins */
+  }
+
+  /* Additional specific styles for the report content if needed */
+  #printable-report-area .print-header, 
+  #printable-report-area .print-footer {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  #printable-report-area .print-table {
+    width: 100%; /* Take full width of the print margin area */
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 10pt; /* Adjust as needed */
+    page-break-inside: auto; /* Allow tables to break across pages if necessary */
+  }
+
+  #printable-report-area .print-table th, 
+  #printable-report-area .print-table td {
+    border: 1px solid #ccc;
+    padding: 6px; /* Adjust as needed */
+    text-align: left; /* Default for LTR, adjust if needed for RTL in PrintableItemReport */
+  }
+  
+  #printable-report-area .print-table th {
+    background-color: #f0f0f0 !important; /* Ensure background prints */
+    font-weight: bold;
+  }
+
+  #printable-report-area .print-table thead {
+    display: table-header-group !important; /* Repeat table header on each page */
+  }
+
+  #printable-report-area .print-table tr {
+    page-break-inside: avoid !important; /* Try to keep rows intact */
+    page-break-after: auto !important;
+  }
+
+  /* Ensure specific alignment for centered cells in print */
+  #printable-report-area .print-table td[style*="text-align: center"],
+  #printable-report-area .print-table th[style*="text-align: center"] {
+    text-align: center !important;
+  }
+}
